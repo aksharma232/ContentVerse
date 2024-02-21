@@ -19,8 +19,8 @@ public class cv_PageUtility
 		boolean isDisplayed = false;
 		try 
 		{
-			WebDriverWait wt = new WebDriverWait(driver, Duration.ofSeconds(10));
-			wt.until(ExpectedConditions.visibilityOf(Ele));
+			WebDriverWait wt = new WebDriverWait(driver, Duration.ofSeconds(15));
+			wt.until(ExpectedConditions.elementToBeClickable(Ele));
 			isDisplayed = true;
 		} 
 		catch (Exception e)
