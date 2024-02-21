@@ -2,6 +2,9 @@ import java.awt.Desktop.Action;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.xpath.XPath;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -30,10 +33,7 @@ public class cvHomePage extends cv_PageUtility{
 	
 	public void listOfCabinatesPresentInDataBase(String cabinateName) throws InterruptedException
 	{
-		//boolean status = false;
-		Thread.sleep(4000);
-		//ArrayList<String> listofCabinatesNames = new ArrayList<String>();
-		
+		Thread.sleep(5000);
 		for(int i=0;i<listOfCabinates.size();i++)
 		{
 			if(listOfCabinates.get(i).getText().trim().equalsIgnoreCase(cabinateName))
@@ -42,6 +42,8 @@ public class cvHomePage extends cv_PageUtility{
 				listOfCabinates.get(i).click();
 				Actions act = new Actions(driver);
 				act.doubleClick(listOfCabinates.get(i)).build().perform();
+				System.out.println(listOfCabinates.get(i).findElements(By.xpath("//li")).size());
+				//driver.findElements(By.xpath(listOfCabinates.get(i)));
 				Thread.sleep(5000);
 				
 			}
