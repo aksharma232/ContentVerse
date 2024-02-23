@@ -3,13 +3,13 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="cvHomePageOEMTest">
+      <class name="cv_ListOfCabinetsTest">
         <methods>
           <include name="initalsetup"/>
-          <include name="cvMainPage"/>
+          <include name="listOfCabinatesPresentInDataBase"/>
           <include name="launchBrowser"/>
         </methods>
-      </class> <!-- cvHomePageOEMTest -->
+      </class> <!-- cv_ListOfCabinetsTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
