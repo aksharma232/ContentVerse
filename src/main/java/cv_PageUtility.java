@@ -14,17 +14,17 @@ public class cv_PageUtility
 		this.driver = driver;
 	}
 	
-	public boolean isDisaplyedE(WebElement Ele, long tm) 
+	public boolean isDisaplyedE(WebElement Ele) 
 	{
 		boolean isDisplayed = false;
 		try 
 		{
-			WebDriverWait wt = new WebDriverWait(driver, Duration.ofSeconds(10));
+			WebDriverWait wt = new WebDriverWait(driver, Duration.ofSeconds(15));
 			wt.until(ExpectedConditions.visibilityOf(Ele));
 			isDisplayed = true;
 		} 
+		
 		catch (Exception e)
-
 		{
 			e.printStackTrace();
 		}

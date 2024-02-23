@@ -49,7 +49,7 @@ public class cvLoginPage extends cv_PageUtility
 		cv_Password.sendKeys(password);
 		roomListValue(room);
 		loginButton.click();
-		if(isDisaplyedE(loginActivePopupYesButton, 20));
+		if(isDisaplyedE(loginActivePopupYesButton))
 		{
 			loginActivePopupYesButton.click();
 		}
