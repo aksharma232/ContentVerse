@@ -1,8 +1,12 @@
+import java.time.Duration;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class cvLoginPage extends cv_PageUtility
 {
@@ -49,7 +53,7 @@ public class cvLoginPage extends cv_PageUtility
 		cv_Password.sendKeys(password);
 		roomListValue(room);
 		loginButton.click();
-		if(isDisaplyedE(loginActivePopupYesButton, 20));
+		if(isDisaplyed(loginActivePopupYesButton))
 		{
 			loginActivePopupYesButton.click();
 		}

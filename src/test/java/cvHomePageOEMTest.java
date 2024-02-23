@@ -1,10 +1,15 @@
 
 
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class cvHomePageOEMTest extends baseClass
 {
+	
+	//table[@id='documentListTable']
 	@Test
 	public void cvMainPage() throws InterruptedException
 	{
@@ -17,6 +22,8 @@ public class cvHomePageOEMTest extends baseClass
 		
 		cv_HP.listOfFoldersPresentInDrawer();
 		cv_HP.selectFolderPresentInDrawer(prop.getProperty("folderName"));
+		
+		cv_HP.documentListTable();
 	}
 	
 }

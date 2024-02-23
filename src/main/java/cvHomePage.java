@@ -36,6 +36,13 @@ public class cvHomePage extends cv_PageUtility{
 	@FindBy(xpath="//div[@id='viewDocumentnavigator']//ul//ul//ul//li")
 	List<WebElement> listOfFolders;
 	
+	@FindBy(xpath="//div[@id='viewDocumentnavigator']//ul//ul//ul//li//a")
+	List<WebElement> selectFolder;
+	
+	@FindBy(xpath="//table[@id='documentListTable']//tbody")
+	List<WebElement> documentListInFolder;
+	
+	
 	public void listOfCabinatesPresentInDataBase(String cabinateName) throws InterruptedException
 	{
 		
@@ -89,7 +96,23 @@ public class cvHomePage extends cv_PageUtility{
 			if(listOfFolders.get(k).getText().trim().equalsIgnoreCase(folderName))
 			{
 				act = new Actions(driver);
-				act.moveToElement(listOfFolders.get(k)).click().build().perform();
+				act.moveToElement(selectFolder.get(k)).click().build().perform();
+			}
+		}
+	}
+	
+	public void documentListTable() throws InterruptedException
+	{
+		for (int i=0; i<documentListInFolder.size(); i++)
+		{
+			if(documentListInFolder.get(i).getText().trim().equalsIgnoreCase("No data available in table"))
+			{
+				System.out.println(documentListInFolder.get(i).getText());
+				System.out.println("TestCase Failed");
+			}
+			else
+			{
+				System.out.println("---->>"+documentListInFolder.get(i).getText());
 			}
 		}
 	}

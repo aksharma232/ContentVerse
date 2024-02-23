@@ -1,9 +1,9 @@
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class cvLoginTest extends baseClass 
-{
+public class cvLoginTest extends baseClass
 
+{
 	@Test
 	public void loginTestWithValidData()
 	{
