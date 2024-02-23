@@ -20,15 +20,10 @@ public class cv_PageUtility
 		boolean isDisplayed = false;
 		try 
 		{
-<<<<<<< HEAD
-			WebDriverWait wt = new WebDriverWait(driver, Duration.ofSeconds(15));
-			wt.until(ExpectedConditions.visibilityOf(Ele));
-=======
 			WebDriverWait wt = new WebDriverWait(driver, Duration.ofSeconds(10));
 			wt.until(ExpectedConditions.elementToBeClickable(Ele));
 			if(Ele.isDisplayed())
 			{	
->>>>>>> satyen
 			isDisplayed = true;
 			}
 		} 
