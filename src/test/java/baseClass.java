@@ -1,6 +1,9 @@
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Properties;
+import java.util.UUID;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -8,6 +11,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -23,6 +27,7 @@ public class baseClass
 	Properties prop;
 	public WebDriver driver;
 	cvLoginPage cv_LP;
+	
 	@BeforeClass
 	public void initalsetup() throws IOException
 	{
@@ -37,12 +42,13 @@ public class baseClass
 		System.out.println(prop.getProperty("browser"));
 		if(prop.getProperty("browser").equalsIgnoreCase("Chrome"))
 		{
+
 			ChromeOptions options = new ChromeOptions();
 			options.addArguments("--remote-allow-origins=*");
 			//options.addArguments("--headless");
 			driver = WebDriverManager.chromedriver().clearDriverCache().capabilities(options).create();
 			//driver = new ChromeDriver(options);
-		}
+			}
 		else if(prop.getProperty("browser").equalsIgnoreCase("Firefox"))
 			{
 			
@@ -50,6 +56,7 @@ public class baseClass
 				FirefoxOptions fop = new FirefoxOptions();
 				driver = new FirefoxDriver(fop);
 			}
+		
 		driver.get(prop.getProperty("url"));
 		
 		cv_LP = new cvLoginPage(driver);
