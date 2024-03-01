@@ -18,7 +18,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class cvHomePage extends cv_PageUtility{
-
+//init web driver
 	WebDriver driver;
 	Actions act;
 	
@@ -76,9 +76,7 @@ public class cvHomePage extends cv_PageUtility{
 	
 	@FindBy(id="messageButtonOKFD")
 	WebElement okButtonInMessage;
-	
-	
-	
+
 	public void listOfCabinatesPresentInDataBase(String cabinateName) throws InterruptedException
 	{
 		
@@ -161,7 +159,13 @@ public class cvHomePage extends cv_PageUtility{
 				Thread.sleep(3000);
 				okButtonToExport.click();
 				System.out.println("---> Step1");
-				Thread.sleep(5000);
+				
+				FluentWait<WebDriver> wt = new FluentWait<WebDriver>(driver)
+						.withTimeout(Duration.ofMinutes(15))
+						.pollingEvery(Duration.ofSeconds(10))
+						.ignoring(Exception.class);
+				wt.until(ExpectedConditions.visibilityOf(exportInfoBox));
+				
 				if (exportInfoBox.getText().trim().equalsIgnoreCase("Error On Download"))
 				{
 					System.out.println(exportInfoBox.getText());
@@ -170,9 +174,7 @@ public class cvHomePage extends cv_PageUtility{
 				else
 				{
 					//cv_PageUtility cv_PU = PageFactory.initElements(driver, cv_PageUtility.class);
-					WebDriverWait wt = new WebDriverWait(driver, Duration.ofMinutes(2));
-					wt.until(ExpectedConditions.visibilityOf(exportInfoMessageBox));
-					Thread.sleep(5000);
+					//Thread.sleep(5000);
 					fileDownloadInBrowser();
 				}
 			}
