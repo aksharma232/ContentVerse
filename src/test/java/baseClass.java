@@ -11,6 +11,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -43,7 +44,30 @@ public class baseClass
 		if(prop.getProperty("browser").equalsIgnoreCase("Chrome"))
 		{
 
-			ChromeOptions options = new ChromeOptions();
+			HashMap<String, Object> prefs = new HashMap<String, Object>();
+		 	prefs.put("profile.default_content_settings.popups", false);
+		 	
+		 	//prefs.put("profile.prompt_for_download:False", content_settings);
+		 	//options.setEnableDownloads(true);
+		 	
+		 	File folder = new File(UUID.randomUUID().toString());
+			folder.mkdir();
+			
+		 	prefs.put("download.default_directory", folder.getAbsolutePath());
+		 	prefs.put("download.prompt_for_download", false);
+		 	prefs.put("safebrowsing.enabled", false);
+		 	
+		 	ChromeOptions options = new ChromeOptions();
+		 	prefs.put("profile.content_settings.exceptions.automatic_downloads.*.setting", 1);
+		 	options.setExperimentalOption("useAutomationExtension", false);
+			options.setExperimentalOption("prefs", prefs);	
+			
+			options.addArguments("disable-popup-blocking");
+				
+			DesiredCapabilities dcap = new DesiredCapabilities();
+			dcap.setCapability(ChromeOptions.CAPABILITY, options);
+			dcap.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true);
+			
 			options.addArguments("--remote-allow-origins=*");
 			//options.addArguments("--headless");
 			driver = WebDriverManager.chromedriver().clearDriverCache().capabilities(options).create();

@@ -1,12 +1,12 @@
 
+
+import java.io.IOException;
 import org.testng.annotations.Test;
 
 public class cvHomePageOEMTest extends baseClass
 {
-	
-	//table[@id='documentListTable']
 	@Test
-	public void cvMainPage() throws InterruptedException
+	public void cvMainPage() throws InterruptedException, IOException
 	{
 		cvHomePage cv_HP = cv_LP.loginData(prop.getProperty("username"),prop.getProperty("password"),prop.getProperty("room"));
 		cv_HP.listOfCabinatesPresentInDataBase(prop.getProperty("cabinateName"));
@@ -21,5 +21,5 @@ public class cvHomePageOEMTest extends baseClass
 		
 		cv_HP.documentListTable();
 	}
-	
 }
+

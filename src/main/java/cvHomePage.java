@@ -159,12 +159,13 @@ public class cvHomePage extends cv_PageUtility{
 				Thread.sleep(3000);
 				okButtonToExport.click();
 				System.out.println("---> Step1");
-				
+			
+				String str = "Please wait Exporting Documents...";
 				FluentWait<WebDriver> wt = new FluentWait<WebDriver>(driver)
 						.withTimeout(Duration.ofMinutes(15))
 						.pollingEvery(Duration.ofSeconds(10))
 						.ignoring(Exception.class);
-				wt.until(ExpectedConditions.visibilityOf(exportInfoBox));
+				wt.until(ExpectedConditions.textToBePresentInElement(exportInfoMessageBox, str));
 				
 				if (exportInfoBox.getText().trim().equalsIgnoreCase("Error On Download"))
 				{
