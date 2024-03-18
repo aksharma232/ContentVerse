@@ -130,7 +130,7 @@ public class cvHomePage extends cv_PageUtility{
 			if(listOfFolders.get(k).getText().trim().equalsIgnoreCase(folderName))
 			{
 				act = new Actions(driver);
-				act.moveToElement(selectFolder.get(k)).click().build().perform();
+				act.moveToElement(selectFolder.get(k)).click(selectFolder.get(k)).build().perform();
 			}
 		}
 	}
