@@ -1,12 +1,6 @@
-import java.awt.Desktop.Action;
-import java.io.File;
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
+import java.time.Duration;
+import java.util.List;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -14,7 +8,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class cvHomePage extends cv_PageUtility{
@@ -28,6 +21,7 @@ public class cvHomePage extends cv_PageUtility{
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
+	
 		// Find WebElement Of Home Page
 	@FindBy(id="navigationMenuBtn")
 	WebElement dataBaseNameInMenu;
@@ -56,7 +50,10 @@ public class cvHomePage extends cv_PageUtility{
 	@FindBy(id="selectall")
 	WebElement seleteAllCheckbox;
 	
-	@FindBy(id="documentSendToLi")
+	@FindBy(xpath="//a[@id='documentListSubMenu']")
+	WebElement documentListMenu;
+
+	@FindBy(xpath="//a[@id='documentSendTo']")
 	WebElement sendTo;
 	
 	@FindBy(id="sendToExport")
@@ -70,6 +67,10 @@ public class cvHomePage extends cv_PageUtility{
 	
 	@FindBy(id="messageBoxFD")
 	WebElement exportInfoMessageBox;
+	
+	@FindBy(xpath="//span[@id='messageContentFD']")
+	WebElement exportMessageBox;
+	
 	
 	@FindBy(id="detailsBlock")
 	WebElement exportInfoBox;
@@ -130,7 +131,7 @@ public class cvHomePage extends cv_PageUtility{
 			if(listOfFolders.get(k).getText().trim().equalsIgnoreCase(folderName))
 			{
 				act = new Actions(driver);
-				act.moveToElement(selectFolder.get(k)).click(selectFolder.get(k)).build().perform();
+				act.moveToElement(selectFolder.get(k)).click(selectFolder.get(k)).build().perform();		
 			}
 		}
 	}
@@ -149,23 +150,29 @@ public class cvHomePage extends cv_PageUtility{
 			}
 			else
 			{
-				System.out.println("---->>"+documentListInFolder.get(i).getText());
+				System.out.println("Documents in selected folder ---->>" +documentListInFolder.get(i).getText());
+			}
+		  }
+	  }
+			public void exportDocuments() throws InterruptedException
+			{
 				seleteAllCheckbox.click();
-				Thread.sleep(5000);
-				act.moveToElement(documentListBox).contextClick(documentListBox).perform();
-				act.moveToElement(sendTo).click().perform();
-				act.moveToElement(sendToExport).click().perform();
-				
 				Thread.sleep(3000);
+				act.moveToElement(documentListBox).contextClick(documentListBox).perform();
+				
+				//act.moveToElement(documentListMenu);
+				Thread.sleep(3000);
+				act.moveToElement(sendTo).click().build().perform();
+				
+				act.moveToElement(sendToExport).click().build().perform();
 				okButtonToExport.click();
-				System.out.println("---> Step1");
 			
-				String str = "Please wait Exporting Documents...";
-				FluentWait<WebDriver> wt = new FluentWait<WebDriver>(driver)
-						.withTimeout(Duration.ofMinutes(15))
+				//WebDriverWait wait = new WebDriverWait(driver,0);
+				FluentWait<WebDriver> wait = new FluentWait<WebDriver>(driver)
+						.withTimeout(Duration.ofMinutes(30))
 						.pollingEvery(Duration.ofSeconds(10))
 						.ignoring(Exception.class);
-				wt.until(ExpectedConditions.textToBePresentInElement(exportInfoMessageBox, str));
+				wait.until(ExpectedConditions.visibilityOf(exportInfoBox));
 				
 				if (exportInfoBox.getText().trim().equalsIgnoreCase("Error On Download"))
 				{
@@ -179,6 +186,5 @@ public class cvHomePage extends cv_PageUtility{
 					fileDownloadInBrowser();
 				}
 			}
-		}
-	}
+			cvNewDocumentPage cv_NDP = new cvNewDocumentPage(driver);
 }

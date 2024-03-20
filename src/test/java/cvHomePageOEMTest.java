@@ -1,5 +1,3 @@
-
-
 import java.io.IOException;
 import org.testng.annotations.Test;
 
@@ -17,9 +15,13 @@ public class cvHomePageOEMTest extends baseClass
 		
 		//cv_HP.listOfFoldersPresentInDrawer();
 		
+		Thread.sleep(2000);
+		//driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
 		cv_HP.selectFolderPresentInDrawer(prop.getProperty("folderName"));
 		
 		cv_HP.documentListTable();
+		
+		//cv_HP.exportDocuments();
 	}
 }
 

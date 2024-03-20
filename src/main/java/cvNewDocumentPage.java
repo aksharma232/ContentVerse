@@ -1,10 +1,4 @@
-import java.io.FileInputStream;
 import java.io.IOException;
-
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -28,38 +22,91 @@ public class cvNewDocumentPage extends cv_PageUtility {
 	@FindBy(id="createDocument")
 	WebElement createDocument;
 	
+	@FindBy(xpath="//span[@id='commentMessage']")
+	WebElement newDocumentMsg;
+	
+	@FindBy(xpath="//button[@id='CommentsMessageModelOk']")
+	WebElement btnOK;
+	
 	@FindBy(xpath="//div[@id='addPagesDropDown']//span[1]")
 	WebElement addButton;
 	
-	@FindBy(xpath="//div[@id='addDocdropdwn']//div[@id='fileUpload']")
-	WebElement fileUpload;
+	@FindBy(xpath="//input[@id='viewDocumentAddPages']")
+	WebElement browseFile;
 	
-	@FindBy(xpath="//input[@id='indices_5']")
-	WebElement ReportName;
+	@FindBy(xpath="//select[@id='docTypeList']")
+	WebElement docType;
+	
+	@FindBy(xpath="//input[@id='indicesViewText_1']")
+	WebElement AuthorsList;
 	
 	@FindBy(id="retainBtn")
 	WebElement retainCheckbox;
 	
-	@FindBy(id="modelNewDocument")
-	WebElement newButton;
+	@FindBy(xpath="//button[@id='createDocumentSubmit']")
+	WebElement btnCreateDoc;
+	
+	@FindBy(xpath="//div[@id='messageModel']")
+	WebElement messageBox;
+	
+	@FindBy(xpath="//span[@id='createDocumentMessage']")
+	WebElement docCreatedMsg;
+	
+	@FindBy(xpath="//button[@id='modelHome']")
+	WebElement btnNavigateDoc;
+	
+	@FindBy(xpath="//button[@id='viewCreatedDocument']")
+	WebElement btnViewDoc;
+	
+	@FindBy(xpath="//button[@id='modelNewDocument']")
+	WebElement btnNewDoc;
 	
 	public void newDocumentUploadThroughBrowse() throws InterruptedException, IOException
 	{
-		createDocument.click();
 		act = new Actions(driver);
-		act.moveToElement(addButton).click();
-		Thread.sleep(3000);
-		fileUpload.click();
+		Thread.sleep(1000);
+		createDocument.click();
 		
-		Runtime.getRuntime().exec("D:\\Satyen\\MyAccount\\Selenium Practice\\AutoIT\\Content Verse\\UploadNewDocument.exe");
-		Thread.sleep(5000);
-		Select docType = new Select(driver.findElement(By.xpath("//select[@id='docTypeList']")));
-		Thread.sleep(3000);
-		docType.selectByValue("1");
-		Thread.sleep(3000);
+		isDisaplyed(newDocumentMsg);
+		if(newDocumentMsg.getText().trim().equalsIgnoreCase("Permission Denied"))
+		{
+			System.out.println(newDocumentMsg.getText());
+			btnOK.click();
+		}
+		else
+		{
+			browseFile.sendKeys("C:\\Users\\Satyendra\\Downloads\\pdf-test.pdf");
+			Thread.sleep(5000);
+			Select type = new Select(docType);
+			type.selectByVisibleText("Test");
+			isDisaplyed(AuthorsList);
+			AuthorsList.sendKeys("Test1");
 		
-		//cv_HP.retainCheckbox.click();
-		driver.findElement(By.xpath("//button[@id='createDocumentSubmit']")).click();
-		newButton.click();
+			//retainCheckbox.click();
+			btnCreateDoc.click();
+			isDisaplyed(messageBox);
+			System.out.println(docCreatedMsg.getText());
+		}
+	}
+	
+	public void documentNavigate()
+	{
+		btnNavigateDoc.click();
+	}
+	public void documentView()
+	{
+		btnViewDoc.click();
+	}
+	public void documentNew()
+	{
+		btnNewDoc.click();
+	}
+	
+	public void createdDocument()
+	{
+		if(docCreatedMsg.getText().trim().equalsIgnoreCase("Document created successfully"))
+		{
+			documentNavigate();
+		}
 	}
 }

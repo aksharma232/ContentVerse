@@ -86,11 +86,9 @@ public class baseClass
 		cv_LP = new cvLoginPage(driver);
 	}
 	
-/*	@AfterMethod
+	/*@AfterMethod
 	public void closeBrowser()
 	{
 		driver.close();
-	}
-	*/
-	
+	} */
 }
